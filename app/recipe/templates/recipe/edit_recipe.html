@@ -1,0 +1,13 @@
+{% extends 'recipe/base.html' %}
+
+{% block title %}Update Recipe{% endblock %}
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {% include 'recipe/includes/form.html' %}
+    <button type="submit" class="btn btn-success">Update</button>
+    <a href="{% url "home" %}" class="btn btn-light">Cancel</a>
+  </form>
+{% endblock %}
+

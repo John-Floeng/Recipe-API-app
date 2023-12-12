@@ -15,6 +15,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = ['email', 'name']
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
+        (_('Personal Info'), {'fields': ('name',)}),
         (
             _('Permissions'),
             {
@@ -43,4 +44,16 @@ class UserAdmin(BaseUserAdmin):
         }),
     )
 
+
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'user', 'description', 'time_minutes', 'price', 'link', 'image']
+
+
+class IngredientAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'user']
+    
+
 admin.site.register(models.User, UserAdmin)
+admin.site.register(models.Recipe, RecipeAdmin)
+admin.site.register(models.Tag)
+admin.site.register(models.Ingredient, IngredientAdmin)

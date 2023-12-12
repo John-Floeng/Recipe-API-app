@@ -1,0 +1,62 @@
+{% extends 'recipe/base.html' %}
+
+{% block content %}
+<h1>Recipes.html - Should be homepage. List recipes - Recipes.html </h1>
+  <div class="container_fluid">
+    <div class="row mt-4">
+      <div class="col-9">
+        {% if search_recipes %}
+          {% for recipe in search_recipes %}
+            <div class='card mb-3'>
+              <div class='card-body'>
+                <h2 class='card-title'>
+                  <a class="text-dark" href="{% url 'recipe:detail' recipe.pk %}"> {{ recipe.title }}</a>
+                </h2>
+                <a href="{% url 'recipe:detail' recipe.pk %}">
+                  <img class="img-fluid mb-3" style="max-height:200px" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                </a>
+                <p class="card-text">{{ recipe.description }}</p>
+                {% if recipe.user == user %}
+                <a href="{% url "recipe:edit" recipe.pk %}" class="btn btn-primary btn-sm" role="button">Edit</a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}  
+
+        {% else %}
+          {% for recipe in recipes %}
+            <div class='card mb-3'>
+              <div class='card-body'>
+                <h2 class='card-title'>
+                  <a class="text-dark" href="{% url 'recipe:detail' recipe.pk %}"> {{ recipe.title }}</a>
+                </h2>
+                <a href="{% url 'recipe:detail' recipe.pk %}">
+                  <img class="img-fluid mb-3" style="max-height:200px" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                </a>
+                <p class="card-text">{{ recipe.description }}</p>
+                {% if recipe.user == user %}
+                  <a href="{% url "recipe:edit" recipe.pk %}" class="btn btn-primary btn-sm" role="button">Edit</a>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% include 'recipe/includes/pagination.html' %} 
+      </div>
+      <div class="col-3">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Search</h3>
+            <form method="get" action="{% url "recipe:search" %}" novalidate>
+              <div class="input-group mt-3">
+                <input name="search" type="text" class="form-control" placeholder="recipe, ingredient..">
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+{% endblock content %}
