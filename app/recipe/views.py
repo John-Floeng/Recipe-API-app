@@ -8,7 +8,7 @@ from drf_spectacular.utils import (
     OpenApiTypes
 )
 from rest_framework import viewsets, mixins, status
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -207,7 +207,7 @@ class SearchView(RecipeListView):
     def get_queryset(self):
         search = self.request.GET.get("search")
         if search:
-            search = search.replace(",", " ").split() # Fjerner komma, og lager en liste med søkeordene
+            search = search.replace(",", " ").split()  # Fjerner komma, og lager en liste med søkeordene
             
             query = Q()
             for keyword in search:
@@ -222,4 +222,21 @@ class SearchView(RecipeListView):
         else:
             obj_list = self.model.objects.all().order_by("-title")
         return obj_list
-        
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_item(request):
+    item_type = request.data.get('type')
+    value = request.data.get('value')
+
+    if not value:
+        return Response({'message': 'No value provided'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if item_type == 'ingredient':
+        Ingredient.objects.create(name=value, user=request.user)
+    elif item_type == 'tag':
+        Tag.objects.create(name=value, user=request.user)
+    else:
+        return Response({'message': 'Invalid item type'}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({'message': 'Item added successfully'}, status=status.HTTP_201_CREATED)

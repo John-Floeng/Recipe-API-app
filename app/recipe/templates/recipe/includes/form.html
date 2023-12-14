@@ -12,19 +12,27 @@
   <div class="form-group">
     {{ field.label_tag }}
 
-    {% if form.is_bound %}
-      {% if field.errors %}
-        {% render_field field class="form-control is-invalid" %}
-        {% for error in field.errors %}
-          <div class="invalid-feedback">
-            {{ error }}
-          </div>
-        {% endfor %}
-      {% else %}
-        {% render_field field class="form-control is-valid" %}
-      {% endif %}
-    {% else %}
+    {% if field.name == 'tags' %}
+      <button type="button" id="addTagBtn" class="btn btn-secondary btn-sm">+ Ny Kategori</button>
       {% render_field field class="form-control" %}
+    {% elif field.name == 'ingredients' %}
+      <button type="button" id="addIngredientBtn" class="btn btn-secondary btn-sm">+ Ny Ingrediens</button>
+      {% render_field field class="form-control" id="ingredientsSelect" %}
+    {% else %}
+      {% if form.is_bound %}
+        {% if field.errors %}
+          {% render_field field class="form-control is-invalid" %}
+          {% for error in field.errors %}
+            <div class="invalid-feedback">
+              {{ error }}
+            </div>
+          {% endfor %}
+        {% else %}
+          {% render_field field class="form-control is-valid" %}
+        {% endif %}
+      {% else %}
+        {% render_field field class="form-control" %}
+      {% endif %}
     {% endif %}
 
     {% if field.help_text %}

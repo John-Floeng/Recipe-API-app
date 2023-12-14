@@ -4,21 +4,24 @@
 {% block title %}{{ recipe.title }}{% endblock %}
 
 {% block content %}
-  <h2>{{ recipe.title }} </h2>
-  <img class="img-fluid mb-3" alt="{{ recipe.title }}" src="{{ recipe.image.url }}"/>
+  <div class="recipe-details">
+    <h2 class="card-title">{{ recipe.title }}</h2>
+    <img class="img-fluid recipe-img mb-3" alt="{{ recipe.title }}" src="{{ recipe.image.url }}"/>
 
-  <h4>Ingredients</h4>
-  <ul>
-    {% for ingredient in recipe.ingredients.all %}
-      <li>{{ ingredient.name }}</li>
-    {% endfor %}
-  </ul>
+    <div class="ingredient-list">
+      <h4>Ingredienser</h4>
+      <ul>
+        {% for ingredient in recipe.ingredients.all %}
+          <li>{{ ingredient.name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
 
-  <h4>Description</h4>
-  <p>{{ recipe.description }}</p>
+    <h4>Beskrivelse</h4>
+    <p>{{ recipe.description }}</p>
 
-  {% if recipe.user == user %}
-    <a href="{% url 'recipe:edit' recipe.pk %}" class='btn btn-primary btn-md mb-3' role='button'>Edit</a>
-  {% endif %}
-  
+    {% if recipe.user == user %}
+      <a href="{% url 'recipe:edit' recipe.pk %}" class='btn btn-primary btn-md mb-3' role='button'>Endre</a>
+    {% endif %}
+  </div>
 {% endblock content %}

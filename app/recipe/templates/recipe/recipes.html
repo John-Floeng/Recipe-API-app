@@ -1,10 +1,10 @@
 {% extends 'recipe/base.html' %}
 
 {% block content %}
-<h1>Recipes.html - Should be homepage. List recipes - Recipes.html </h1>
+
   <div class="container_fluid">
     <div class="row mt-4">
-      <div class="col-9">
+      <div class="col-lg-6 offset-lg-2">
         {% if search_recipes %}
           {% for recipe in search_recipes %}
             <div class='card mb-3'>
@@ -12,12 +12,14 @@
                 <h2 class='card-title'>
                   <a class="text-dark" href="{% url 'recipe:detail' recipe.pk %}"> {{ recipe.title }}</a>
                 </h2>
-                <a href="{% url 'recipe:detail' recipe.pk %}">
-                  <img class="img-fluid mb-3" style="max-height:200px" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
-                </a>
+                <div class="d-flex justify-content-center">
+                  <a href="{% url 'recipe:detail' recipe.pk %}">
+                    <img class="img-fluid recipe-img" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                  </a>
+                </div>
                 <p class="card-text">{{ recipe.description }}</p>
                 {% if recipe.user == user %}
-                <a href="{% url "recipe:edit" recipe.pk %}" class="btn btn-primary btn-sm" role="button">Edit</a>
+                <a href="{% url "recipe:edit" recipe.pk %}" class="btn btn-primary btn-sm" role="button">Endre</a>
                 {% endif %}
               </div>
             </div>
@@ -31,11 +33,11 @@
                   <a class="text-dark" href="{% url 'recipe:detail' recipe.pk %}"> {{ recipe.title }}</a>
                 </h2>
                 <a href="{% url 'recipe:detail' recipe.pk %}">
-                  <img class="img-fluid mb-3" style="max-height:200px" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                  <img class="img-fluid recipe-img" src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
                 </a>
                 <p class="card-text">{{ recipe.description }}</p>
                 {% if recipe.user == user %}
-                  <a href="{% url "recipe:edit" recipe.pk %}" class="btn btn-primary btn-sm" role="button">Edit</a>
+                  <a href="{% url "recipe:edit" recipe.pk %}" class="btn btn-primary btn-sm" role="button">Endre</a>
                 {% endif %}
               </div>
             </div>
@@ -46,12 +48,12 @@
       <div class="col-3">
         <div class="card">
           <div class="card-body">
-            <h3 class="card-title">Search</h3>
+            <h3 class="card-title">Søk</h3>
             <form method="get" action="{% url "recipe:search" %}" novalidate>
               <div class="input-group mt-3">
                 <input name="search" type="text" class="form-control" placeholder="recipe, ingredient..">
                 <div class="input-group-append">
-                  <button class="btn btn-primary" type="submit">Search</button>
+                  <button class="btn btn-primary" type="submit">Søk</button>
                 </div>
               </div>
             </form>
