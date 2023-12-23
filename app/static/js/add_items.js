@@ -3,12 +3,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var addIngredientButton = document.getElementById('addIngredientBtn');
 
     addTagButton.addEventListener('click', function() {
-        createTextField('newTag', 'Legg til ny kategori', addTagButton);
+        toggleTextField('newTag', 'Legg til ny kategori', addTagButton);
     });
 
     addIngredientButton.addEventListener('click', function() {
-        createTextField('newIngredient', 'Legg til ny ingrediens', addIngredientButton);
+        toggleTextField('newIngredient', 'Legg til ny ingrediens', addIngredientButton);
     });
+
+    function toggleTextField(name, placeholder, button) {
+        var existingFormGroup = document.getElementById(name + 'FormGroup');
+        
+        if (existingFormGroup) {
+            existingFormGroup.remove();
+        } else {
+            createTextField(name, placeholder, button);
+        }
+    }
 
     function createTextField(name, placeholder, button) {
         var newInput = document.createElement('input');
@@ -16,32 +26,35 @@ document.addEventListener('DOMContentLoaded', function() {
         newInput.name = name;
         newInput.placeholder = placeholder;
         newInput.className = 'form-control';
-
+    
         var addButton = document.createElement('button');
         addButton.type = 'button';
         addButton.innerText = 'Legg til';
         addButton.className = 'btn btn-primary';
+    
         addButton.addEventListener('click', function() {
             var inputValue = newInput.value;
             var itemType = (name === 'newTag' ? 'tag' : 'ingredient');
             sendAjaxRequest(inputValue, itemType);
         });
-
+    
         var inputGroup = document.createElement('div');
         inputGroup.className = 'col-8';
         inputGroup.appendChild(newInput);
-
+    
         var buttonGroup = document.createElement('div');
         buttonGroup.className = 'col-4';
         buttonGroup.appendChild(addButton);
-
+    
         var formGroup = document.createElement('div');
+        formGroup.id = name + 'FormGroup';
         formGroup.className = 'form-group row';
         formGroup.appendChild(inputGroup);
         formGroup.appendChild(buttonGroup);
-
+    
         button.parentNode.insertBefore(formGroup, button.nextSibling);
     }
+    
 
     function sendAjaxRequest(value, type) {
         var xhr = new XMLHttpRequest();
@@ -75,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return cookieValue;
     }
     var selectElement = document.getElementById('ingredientsSelect');
-    if (selectElement) { // Check if the element exists
+    if (selectElement) {
         selectElement.addEventListener('mousedown', function(event) {
             event.preventDefault();
             var option = event.target;

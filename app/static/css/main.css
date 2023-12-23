@@ -56,3 +56,6 @@ form input, form button {
     margin-top: 15px;
 }
 
+#ingredientsSelect {
+    height: 20em;
+}

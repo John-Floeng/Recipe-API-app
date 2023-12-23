@@ -22,7 +22,7 @@ from django.db.models import Count, Q
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 
 @extend_schema_view(
@@ -240,3 +240,7 @@ def add_item(request):
         return Response({'message': 'Invalid item type'}, status=status.HTTP_400_BAD_REQUEST)
 
     return Response({'message': 'Item added successfully'}, status=status.HTTP_201_CREATED)
+
+
+def swagger_view(request):
+    return render(request, 'recipe/swagger.html')

@@ -12,7 +12,6 @@ class RecipeForm(forms.ModelForm):
         model = Recipe
         fields = '__all__'
         help_texts = {
-            "ingredients": "Select Ingredients  (Hold down the Ctrl (windows/linux)"
-            " / Command (Mac) button to select multiple options.)",
+            "tags": "Hold Ctrl nede for å velge flere kategorier",
         }
 

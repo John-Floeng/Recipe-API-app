@@ -15,34 +15,48 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'home' %}">Hjem</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'recipe:share' %}">Del en oppskrift</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'api-docs' %}">API dokumentasjon</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto mr-2">
-                {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    <a href="{% url 'home' %}" class="btn btn-outline-primary nav-link text-white">Mine oppskrifter</a>
+                        <a class="nav-link text-white" href="{% url 'home' %}">Hjem</a>
                     </li>
                     <li class="nav-item">
-                    <a href="{% url 'user:logout' %}" class="btn btn-primary nav-link ml-2 text-white">Logg ut</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a href="{% url 'user:login' %}" class="btn btn-outline-primary nav-link text-white">Logg inn</a>
+                        <a class="nav-link text-white" href="{% url 'recipe:share' %}">Del en oppskrift</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{% url 'user:create_user' %}" class="btn btn-primary nav-link ml-2 text-white">Create User</a>
+                        <a class="nav-link text-white" href="{% url 'home' %}">Mine oppskrifter</a>
                     </li>
-                {% endif %}
-            </ul>
+                </ul>
+                <ul class="navbar-nav ml-auto mr-2">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'user:logout' %}">Logg ut</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ml-2 text-white" href="{% url 'api-docs' %}">API dokumentasjon</a>
+                    </li>
+                </ul>
+            {% else %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'home' %}">Hjem</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'recipe:share' %}">Del en oppskrift</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'user:create_user' %}">Opprett en bruker</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto mr-2">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'user:login' %}">Logg inn</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ml-2 text-white" href="{% url 'api-docs' %}">API dokumentasjon</a>
+                    </li>
+                </ul>
+            {% endif %}
+            
         </div>
     </div>
     </nav>
