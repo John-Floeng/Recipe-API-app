@@ -10,7 +10,7 @@ from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView
 from django.urls import reverse, reverse_lazy
 from core.models import User
-from .forms import UserCreationForm
+from .forms import UserCreationForm, CustomAuthenticationForm
 
 from user.serializers import (
     UserSerializer,
@@ -73,4 +73,5 @@ class UserCreateView(CreateView):
 class UserLoginView(LoginView):
     """Login page."""
     template_name = 'user/login.html'
-    success_url = 'https://www.nrk.no/'
+    authentication_form = CustomAuthenticationForm
+    success_url = 'home'

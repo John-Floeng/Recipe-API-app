@@ -9,8 +9,9 @@ from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
-    PermissionsMixin
-)
+    PermissionsMixin)
+from django.utils.translation import gettext_lazy as _
+
 
 
 def recipe_image_file_path(instance, filename):
@@ -60,16 +61,17 @@ class Recipe(models.Model):
     """Recipe object."""
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        verbose_name='Bruker'
     )
-    title = models.CharField(max_length=255)
-    description = models.TextField(blank=True)
-    time_minutes = models.IntegerField()
-    price = models.DecimalField(max_digits=5, decimal_places=2)
-    link = models.CharField(max_length=255, blank=True)
-    tags = models.ManyToManyField('Tag')
-    ingredients = models.ManyToManyField('Ingredient')
-    image = models.ImageField(null=True, upload_to=recipe_image_file_path)
+    title = models.CharField(max_length=255, verbose_name='Tittel på oppskrift')
+    description = models.TextField(blank=True, verbose_name='Beskrivelse')
+    time_minutes = models.IntegerField(verbose_name='Tid i minutter')
+    price = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Pris')
+    link = models.CharField(max_length=255, blank=True, )
+    tags = models.ManyToManyField('Tag', verbose_name='Kategori(er)')
+    ingredients = models.ManyToManyField('Ingredient', verbose_name='Ingredienser')
+    image = models.ImageField(null=True, upload_to=recipe_image_file_path, verbose_name='Bilde')
 
     def __str__(self):
         return self.title

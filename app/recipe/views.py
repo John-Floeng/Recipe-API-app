@@ -212,6 +212,7 @@ class SearchView(RecipeListView):
             query = Q()
             for keyword in search:
                 query |= Q(title__icontains=keyword)
+                query |= Q(tags__name__icontains=keyword)
                 query |= Q(ingredients__name__icontains=keyword) # |= legger hvert element inn i Q objektet med en OR operator.
             print(query)
 
@@ -230,16 +231,16 @@ def add_item(request):
     value = request.data.get('value')
 
     if not value:
-        return Response({'message': 'No value provided'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'Legg til her'}, status=status.HTTP_400_BAD_REQUEST)
 
     if item_type == 'ingredient':
         Ingredient.objects.create(name=value, user=request.user)
     elif item_type == 'tag':
         Tag.objects.create(name=value, user=request.user)
     else:
-        return Response({'message': 'Invalid item type'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': 'Ikke gyldig'}, status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({'message': 'Item added successfully'}, status=status.HTTP_201_CREATED)
+    return Response({'message': 'Lagt til'}, status=status.HTTP_201_CREATED)
 
 
 def swagger_view(request):
