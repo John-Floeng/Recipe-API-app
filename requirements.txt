@@ -5,4 +5,4 @@ drf-spectacular>=0.15.1,<0.16
 Pillow>=8.2.0,<8.3.0
 django-widget-tweaks==1.5
 drf-yasg==1.21
-uwsgi>=2.0.19<2.1
+uwsgi>=2.0.19,<2.1
