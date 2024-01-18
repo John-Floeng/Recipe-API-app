@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var inputValue = newInput.value;
             var itemType = (name === 'newTag' ? 'tag' : 'ingredient');
             sendAjaxRequest(inputValue, itemType);
+            newInput.value = '';
         });
     
         var inputGroup = document.createElement('div');
@@ -63,14 +64,28 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
 
         xhr.onload = function() {
-            if (xhr.status === 200) {
+            if (xhr.status === 200 || xhr.status === 201) {
                 console.log('Item added:', xhr.responseText);
+                updateSelectList(value, type)
             } else {
                 console.error('Error adding item:', xhr.status, xhr.statusText);
             }
         };
 
         xhr.send('type=' + encodeURIComponent(type) + '&value=' + encodeURIComponent(value));
+    }
+
+    function updateSelectList(value, type) {
+        var selectId = (type === 'tag' ? 'tagsSelect' : 'ingredientsSelect');
+        var selectElement = document.getElementById(selectId);
+        
+        if (selectElement) {
+            var newOption = document.createElement('option');
+            newOption.value = value;
+            newOption.text = value;
+            newOption.selected = true;
+            selectElement.appendChild(newOption);
+        }
     }
 
     function getCookie(name) {

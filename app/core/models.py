@@ -88,6 +88,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
     
+    class Meta:
+        ordering = ['name']
+    
 
 class Ingredient(models.Model):
     """Ingredient for recipe."""
@@ -99,3 +102,6 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        ordering = ['name']

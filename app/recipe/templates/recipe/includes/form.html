@@ -14,7 +14,7 @@
 
     {% if field.name == 'tags' %}
       <button type="button" id="addTagBtn" class="btn btn-secondary btn-sm">+ Ny Kategori</button>
-      {% render_field field class="form-control" %}
+      {% render_field field class="form-control" id="tagsSelect" %}
     {% elif field.name == 'ingredients' %}
       <button type="button" id="addIngredientBtn" class="btn btn-secondary btn-sm">+ Ny Ingrediens</button>
       {% render_field field class="form-control" id="ingredientsSelect" %}

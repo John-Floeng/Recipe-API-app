@@ -17,7 +17,7 @@ from core.models import Recipe, Tag, Ingredient
 from recipe import serializers
 from recipe.forms import RecipeForm
 
-from django.views.generic import CreateView, DetailView, ListView, UpdateView, View
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.db.models import Count, Q
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -183,7 +183,7 @@ class RecipeUpdateView(UpdateView):
         recipe = form.save(commit=False)
         recipe.save()
         form.save_m2m()
-        return redirect("detail", recipe_pk=recipe.pk)
+        return redirect("recipe:detail", recipe_pk=recipe.pk)
   
 
 @method_decorator(login_required, name="dispatch")
@@ -214,12 +214,10 @@ class SearchView(RecipeListView):
                 query |= Q(title__icontains=keyword)
                 query |= Q(tags__name__icontains=keyword)
                 query |= Q(ingredients__name__icontains=keyword) # |= legger hvert element inn i Q objektet med en OR operator.
-            print(query)
 
             obj_list = (
                 self.model.objects.filter(query).order_by("-title").distinct()
             )
-            print(obj_list)
         else:
             obj_list = self.model.objects.all().order_by("-title")
         return obj_list
