@@ -15,4 +15,3 @@ class RecipeForm(forms.ModelForm):
         help_texts = {
             "tags": "Hold Ctrl nede for å velge flere kategorier",
         }
-
